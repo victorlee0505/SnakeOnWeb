@@ -17,9 +17,10 @@ import java.util.List;
 public interface SnakeService {
 
     /**
-     *
+     * if player already exists, then set its status to ONLINE, and update its hostname.
+     * if player is new one, then insert new one record to DB!
      * @param playerName
-     * @return a Player object whether player is newbie or not, and it will never be null
+     * @return a Player object no matter player is newbie or not, and it will never be null
      */
     public Player login(String playerName, String hostName) throws IpConflictException;
 
@@ -38,6 +39,11 @@ public interface SnakeService {
 
     public List<Player> getPlayerList();
 
+    /**
+     *
+     * @param name
+     * @return if player doesn't exist, then return null!
+     */
     public Player getPlayerByName(String name);
 
     /**

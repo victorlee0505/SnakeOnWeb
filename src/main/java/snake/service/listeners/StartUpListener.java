@@ -20,17 +20,23 @@ public class StartUpListener {
 
     @EventListener(ContextRefreshedEvent.class)
     public void gameStart(){
-        try {
-            ServerSocket serverSocket = new ServerSocket(6666);
-            ExecutorService executorService = Executors.newFixedThreadPool(10);
-            while (true){
-                Socket socket = serverSocket.accept();
-                //get the IP address!!
-                System.out.println((socket.getInetAddress()).getHostName());
-                executorService.execute(new SocketThread(socket));
+        System.out.println("listener triggered!");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ServerSocket serverSocket = new ServerSocket(6666);
+                    ExecutorService executorService = Executors.newFixedThreadPool(10);
+                    while (true){
+                        Socket socket = serverSocket.accept();
+                        //get the IP address!!
+                        System.out.println((socket.getInetAddress()).getHostName());
+                        executorService.execute(new SocketThread(socket));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 }
