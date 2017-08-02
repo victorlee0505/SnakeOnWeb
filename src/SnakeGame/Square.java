@@ -62,7 +62,7 @@ public class Square
 
     public void render(Graphics2D graphics)
     {
-        graphics.fillRect(x + 1, y +1, size - 2, size - 2);
+        graphics.fillRect(x + 1, y +1, size - 1, size - 1);
     }
 
 

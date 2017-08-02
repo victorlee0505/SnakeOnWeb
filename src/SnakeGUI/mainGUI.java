@@ -1,11 +1,8 @@
 package SnakeGUI;
 
-import SnakeGame.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +11,12 @@ import java.io.IOException;
 
 
 /**
+ * This is the View component of the SnakeOnWeb User Interface
+ * Here is the List of the UI.
+ * 1. Frame
+ * 2. JPanel : Main, Single, Multi
+ * 3. Button: Login, Score, Single, Multi
+ *
  * Created by victo on 7/24/2017.
  */
 public class mainGUI extends JFrame{
@@ -22,6 +25,7 @@ public class mainGUI extends JFrame{
     private static controlGUI myControl = new controlGUI();
 
         //Startup Windows Size
+
         public static Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
         private int jFrameWidth = (int) (screenDimension.width * 0.6);
         private int jFrameHeight = (int) (screenDimension.height * 0.6);
@@ -36,8 +40,13 @@ public class mainGUI extends JFrame{
 
         Container contentPane;
 
-
-        public mainGUI() {
+    /**
+     * A new JFrame as a container for various JPanel
+     *  Initial position by screen dimension.
+     *  pop up a welcome dialog.
+     *  execute main menu (introGUI)
+     */
+    public mainGUI() {
 
             super("Second Version");
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +60,6 @@ public class mainGUI extends JFrame{
 
             myControl.openingDial();
             introGui();
-
         }
 
         /**
@@ -62,21 +70,14 @@ public class mainGUI extends JFrame{
         //====================================================================================
         public static class gameArea extends JPanel
         {
-
+            /**
+             * Snake executed in gameArea's JPanel.
+             */
             public gameArea() {
 
-                /*int w = singleSizeDefault.width - 200;
-
-                int h = singleSizeDefault.height - 200;*/
-
-
                 add(mainGUI.myControl.startGame());
-
-
-                // add(mainGUI.myControl.startGame();
-
-
-                //setPreferredSize(new Dimension(w,h));
+                setFocusable(false);
+                //requestFocus();
             }
 
             @Override
@@ -85,7 +86,6 @@ public class mainGUI extends JFrame{
 
                 String a = "This is the width = " + singleSizeDefault.width;
                 g.drawString(a, 20, 20);
-
             }
         }
 
@@ -93,7 +93,14 @@ public class mainGUI extends JFrame{
 
     // Graphical User Interface ================================================================
 
-        public void introGui() {
+    /**
+     * This is a JPanel: main menu of the game in GridBagLayout.
+     * Screen Size is the same as original JFrame.
+     * It has a background image and 4 buttons.
+     *
+     */
+
+    public void introGui() {
 
             //main page
 
@@ -123,7 +130,6 @@ public class mainGUI extends JFrame{
             //Layout
             GridBagConstraints introGrid = new GridBagConstraints();
             introGrid.anchor = GridBagConstraints.FIRST_LINE_START;
-
 
             //Button : Login
             introGrid.insets = new Insets(20, 50, 0, 0);
@@ -173,9 +179,14 @@ public class mainGUI extends JFrame{
 
             contentPane.validate();
             contentPane.repaint();
-
         }
 
+    /**
+     * This is a JPanel: single player mode in GridBagLayout.
+     *
+     * it has a background color with 2 buttons.
+     * 2 buttons: resetButton , quit button
+     */
         public void singlePlay() {
 
             contentPane.removeAll();
@@ -190,7 +201,6 @@ public class mainGUI extends JFrame{
             contentPane.add(singleMode);
 
             singleMode.setBackground(Color.blue);
-
 
             // title
             JLabel label1 = new JLabel("Single Player Mode");
@@ -208,22 +218,34 @@ public class mainGUI extends JFrame{
             gameArea area = new gameArea();
             singleMode.add(area, singleGrid);
 
-            System.out.println(mainGUI.myControl.startGame().getScore());
-            System.out.println(mainGUI.myControl.startGame().getGameOver());
+            //submit score button
+            singleGrid.gridx = 0;
+            singleGrid.gridy = 2;
+
+            singleMode.add(submitButton(), singleGrid);
+
+            //Reset Game button
+            singleGrid.gridx = 1;
+            singleGrid.gridy = 2;
+
+            singleMode.add(resetButton(), singleGrid);
 
             //Quit button
-            singleGrid.gridx = 0;
+            singleGrid.gridx = 2;
             singleGrid.gridy = 2;
 
             singleMode.add(quitButton(), singleGrid);
 
             validate();
-
         }
 
-
+    /**
+     * This is a JPanel: multi player mode in GridBagLayout.
+     *
+     * it has a background color with 2 buttons.
+     * 2 buttons: resetButton , quit button
+     */
         public void multiPlay() {
-
 
             contentPane.removeAll();
 
@@ -237,7 +259,6 @@ public class mainGUI extends JFrame{
             contentPane.add(multiMode);
 
             multiMode.setBackground(Color.green);
-
 
             // title
             JLabel label1 = new JLabel("Multi Player Mode");
@@ -255,7 +276,6 @@ public class mainGUI extends JFrame{
             multiMode.add(area, multiGrid);
 
             // Game Area 2
-
             multiGrid.insets = new Insets(0, 50, 0, 0);
             multiGrid.gridx = 1;
             multiGrid.gridy = 1;
@@ -263,21 +283,31 @@ public class mainGUI extends JFrame{
             gameArea area2 = new gameArea();
             multiMode.add(area2, multiGrid);
 
-
-            //Quit button
+            //Reset Game button
             multiGrid.gridx = 0;
+            multiGrid.gridy = 2;
+
+            multiMode.add(resetButton(), multiGrid);
+            //Quit button
+            multiGrid.gridx = 1;
             multiGrid.gridy = 2;
 
             multiMode.add(quitButton(), multiGrid);
 
             validate();
-
         }
 
         // ==========================================================================
 
         // BUTTON ====================================================================
 
+    /**
+     * Login Button:
+     * execute Login confirmation dialog from controlGUI class.
+     * Default button text : "Login"
+     * Button text will change to "UserID" after login.
+     * @return JButton
+     */
     public JButton loginButton(){
 
         JButton account = new JButton("Login");
@@ -307,6 +337,13 @@ public class mainGUI extends JFrame{
         return account;
     }
 
+    /**
+     * ScoreButton:
+     * execute ScoreBoard popup from controlGUI class.
+     * Default button text : "ScoreBoard"
+     *
+     * @return JButton
+     */
     public JButton scoreButton(){
         JButton score = new JButton("ScoreBoard");
         score.setVerticalTextPosition(AbstractButton.BOTTOM);
@@ -322,6 +359,16 @@ public class mainGUI extends JFrame{
         return score;
     }
 
+    /**
+     * singleButton:
+     * execute enter single game mode confirmation from controlGUI class.
+     *
+     * ActionListener await for user response from controlGUI.
+     * 0 -- proceed to singleMode(View).
+     * 1 -- no action.
+     *
+     * @return JButton
+     */
     public JButton singleButton(){
 
         ImageIcon singleIcon = new ImageIcon("src/image/icon/single.png");
@@ -338,10 +385,19 @@ public class mainGUI extends JFrame{
                 }
             }
         });
-
         return single;
     }
 
+    /**
+     * multiButton:
+     * execute enter multi player game mode confirmation from controlGUI class.
+     *
+     * ActionListener await for user response from controlGUI.
+     * 0 -- proceed to multiMode(View).
+     * 1 -- no action.
+     *
+     * @return JButton
+     */
     public JButton multiButton(){
 
         ImageIcon multiIcon = new ImageIcon("src/image/icon/multi.png");
@@ -357,30 +413,73 @@ public class mainGUI extends JFrame{
                 }
             }
         });
-
         return multi;
     }
 
+    /**
+     * quit Button:
+     * exit game mode back to main menu (introGUI) if the game is ENDED.
+     *
+     * @return JButton
+     */
     public JButton quitButton(){
 
-        // ImageIcon singleIcon = new ImageIcon("src/image/icon/single.png");
         JButton quit = new JButton("QUIT");
-        // quit.setVerticalTextPosition(AbstractButton.BOTTOM);
-        // quit.setHorizontalTextPosition(AbstractButton.CENTER);
+        quit.setFocusable(false);
 
         quit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if(myControl.isGameEnd()){
                 introGui();
+                }
             }
         });
-
         return quit;
     }
 
+    /**
+     * resetButton:
+     * execute resetGame from controlGUI.
+     *
+     * @return JButton
+     */
+    public JButton resetButton() {
+
+        JButton reset = new JButton("Restart");
+        reset.setFocusable(false);
+
+            reset.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    myControl.resetGame();
+                    singlePlay();
+                }
+            });
+
+        return reset;
+    }
+
+    /**
+     * submitButton:
+     * execute submission of player score to the server
+     * @return JButton
+     */
+    public JButton submitButton(){
+
+        JButton submit = new JButton("Submit Score");
+        submit.setFocusable(false);
+
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    myControl.submitScore();
+            }
+        });
+        return submit;
+    }
     //===================================================================================
-
-
 
     public static void main(String[] args) {
 

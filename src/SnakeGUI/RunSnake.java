@@ -1,7 +1,5 @@
 package SnakeGUI;
 
-import SnakeGame.*;
-
 /**
  * Created by victo on 7/24/2017.
  */

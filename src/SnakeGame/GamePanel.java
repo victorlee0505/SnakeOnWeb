@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener {
@@ -48,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     private boolean up,down,right,left,start;
     public GamePanel(modelGUI modelGUI)
     {
+
         this.modelGUI = modelGUI;
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setFocusable(true);
@@ -139,11 +140,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
     private void init(){
+        gameOver = false;
         image =new BufferedImage( WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         g2d=image.createGraphics();
         running =true;
         setupLevel();
-        gameOver = false;
+
         level = 1;
         setFPS(level * 10);
     }
@@ -277,12 +279,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         food.render(g2d);
 
 
+
         if(gameOver)
         {
+
             g2d.drawString("GameOver!", 150, 200);
+
         }
-
-
 
         g2d.setColor(Color.WHITE);
         g2d.drawString("Score : " + score + " Level : " + level, 10, 10 );
@@ -302,4 +305,5 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     {
         modelGUI.setGameOver(this.gameOver);
     }
+
 }
