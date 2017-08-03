@@ -19,6 +19,8 @@ public class modelGUI {
 
     public SnakeGame.GamePanel game;
 
+    public SnakeGame.GamePanel Multigame;
+
     //Connection to server
     private static serverStream myServer = new serverStream();
 

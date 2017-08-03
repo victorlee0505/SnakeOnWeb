@@ -1,4 +1,5 @@
 package SnakeGUI;
+import SnakeGame.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -73,9 +74,9 @@ public class mainGUI extends JFrame{
             /**
              * Snake executed in gameArea's JPanel.
              */
-            public gameArea() {
+            public gameArea(Control control, int option) {
 
-                add(mainGUI.myControl.startGame());
+                add(mainGUI.myControl.startGame(control, option));
                 setFocusable(false);
                 //requestFocus();
             }
@@ -215,7 +216,9 @@ public class mainGUI extends JFrame{
             singleGrid.gridy = 1;
 
             //Calling inner class (game place holder)
-            gameArea area = new gameArea();
+            Control control = new Control();
+            gameArea area = new gameArea(control, 1);
+            System.out.println(myControl.startGame(control, 1));
             singleMode.add(area, singleGrid);
 
             //submit score button
@@ -272,7 +275,10 @@ public class mainGUI extends JFrame{
             multiGrid.gridx = 0;
             multiGrid.gridy = 1;
 
-            gameArea area = new gameArea();
+            Control control1 = new Control();
+            gameArea area = new gameArea(control1, 2);
+            System.out.println("HELLLLLLLLLLLO WORLD!!!!!!!!!!");
+            System.out.println(myControl.startGame(control1, 2));
             multiMode.add(area, multiGrid);
 
             // Game Area 2
@@ -280,12 +286,13 @@ public class mainGUI extends JFrame{
             multiGrid.gridx = 1;
             multiGrid.gridy = 1;
 
-            gameArea area2 = new gameArea();
+            Control control2 = new AlternateControl();
+            gameArea area2 = new gameArea(control2, 2);
             multiMode.add(area2, multiGrid);
 
-            //Reset Game button
+/*            //Reset Game button
             multiGrid.gridx = 0;
-            multiGrid.gridy = 2;
+            multiGrid.gridy = 2;*/
 
             multiMode.add(resetButton(), multiGrid);
             //Quit button

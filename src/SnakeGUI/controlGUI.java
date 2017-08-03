@@ -1,5 +1,6 @@
 package SnakeGUI;
 
+import SnakeGame.Control;
 import SnakeGame.GamePanel;
 import javax.swing.*;
 
@@ -12,6 +13,7 @@ public class controlGUI {
 
 
     private modelGUI myModel;
+    //private Control snakeControl;
 
     public controlGUI(){
 
@@ -118,9 +120,18 @@ public class controlGUI {
      *
      * @return game
      */
-    public GamePanel startGame(){
+    public GamePanel startGame(Control snakeControl, int option){
         myModel.game = null;
-        myModel.game = new GamePanel(this.myModel);
+
+        if(option == 1)
+        {
+            myModel.game = new GamePanel(this.myModel , snakeControl);
+        }
+
+        if(option == 2)
+        {
+            myModel.Multigame = new GamePanel(this.myModel, snakeControl);
+        }
 
         return myModel.game;
     }
@@ -146,7 +157,8 @@ public class controlGUI {
         //Put the method that reset the game here
         if(myModel.GameOver){
             myModel.GameOver=false;
-            myModel.resetGameOver();
+            myModel.game.reset();
+            //myModel.resetGameOver();
             System.out.println("restart pressed");
         }
     }
